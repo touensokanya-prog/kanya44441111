@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>កម្រងសំណួរ QCM គណិតវិទ្យា - លោកគ្រូ តឿន សុកាន់យ៉ា</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts for Khmer and English -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- MathJax Config for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <style>
+    body {
+      font-family: 'Battambang', 'Kantumruy Pro', system-ui, -apple-system, sans-serif;
+    }
+    h1, h2, h3, .khmer-title {
+      font-family: 'Kantumruy Pro', 'Battambang', sans-serif;
+      font-weight: 700;
+    }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(241, 241, 241, 0.1);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.5);
+      border-radius: 4px;
+    }
+    
+    /* Optimized CSS for Printing and PDF Quality */
+    @media print {
+      @page {
+        size: A4;
+        margin: 15mm 15mm 15mm 15mm;
+      }
+      body {
+        background: white !important;
+        color: black !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-page {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      /* Prevent splitting inside questions */
+      .doc-q-split {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        margin-bottom: 1.5rem !important;
+        padding-top: 1rem !important;
+      }
+      /* Prevent splitting matrix table */
+      .matrix-print-block {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      /* Ensure MathJax uses optimal SVGs in PDF */
+      mjx-container {
+        font-size: 100% !important;
+        page-break-inside: avoid !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-300">
+
+  <!-- ក្បាលទំព័រ (Header Area) -->
+  <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white shadow-lg sticky top-0 z-30 no-print">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+          <i data-lucide="calculator" class="w-8 h-8 text-yellow-300"></i>
+        </div>
+        <div>
+          <h1 class="text-lg md:text-xl font-bold tracking-wide">កម្រងសំណួរ QCM គណិតវិទ្យា</h1>
+          <p class="text-xs text-blue-200">រៀបរៀងដោយ៖ លោកគ្រូ តឿន សុកាន់យ៉ា</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-3">
+        <!-- ប៊ូតុងប្តូរពណ៌ Dark/Light Mode -->
+        <button id="themeToggle" class="p-2 rounded-lg bg-blue-800 hover:bg-blue-900 text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" title="ប្តូរពណ៌ងងឹត/ភ្លឺ">
+          <i data-lucide="moon" id="themeIcon" class="w-5 h-5"></i>
+        </button>
+        
+        <!-- ទម្រង់ប៊ូតុងទាញយកជា Word -->
+        <button onclick="downloadAsWord()" class="bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-2 shadow-md hover:shadow-lg transition-all">
+          <i data-lucide="file-text" class="w-5 h-5"></i>
+          <span class="text-sm">ទាញយកជា Word (.doc)</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- តួខ្លួនចម្បង (Main Workspace) -->
+  <main class="max-w-7xl mx-auto px-4 py-6 md:py-8">
+    
+    <!-- ព័ត៌មានអំពីកម្រងសំណួរ -->
+    <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 mb-8 no-print">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300 rounded-full text-xs font-semibold mb-2">វិញ្ញាសាត្រៀមប្រឡង / លំហាត់ជ្រើសរើសពិសេស</span>
+          <h2 class="text-2xl font-bold text-slate-800 dark:text-white leading-tight">Mathematics QCM Collection (LaTeX Format)</h2>
+          <p class="text-slate-600 dark:text-slate-300 mt-2 text-sm">
+            កម្រងសំណួរជ្រើសរើសពិសេសចាប់ពីសំណួរ <b>១ ដល់ ៣០</b> (សរុប ៣០ សំណួរ) ដែលប្រើប្រាស់ទម្រង់ LaTeX (<code class="bg-slate-100 dark:bg-slate-700 px-1 rounded text-pink-600 dark:text-pink-400">$...$</code>) សម្រាប់រូបមន្តគណិតវិទ្យា។
+          </p>
+        </div>
+        
+        <!-- Tab Mode Switcher -->
+        <div class="flex bg-slate-100 dark:bg-slate-700 p-1.5 rounded-xl self-start md:self-center">
+          <button id="modeQuizBtn" onclick="switchMode('quiz')" class="px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-all duration-200 bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-sm">
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+            របៀបតេស្តសាកល្បង
+          </button>
+          <button id="modeDocBtn" onclick="switchMode('document')" class="px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition-all duration-200 text-slate-600 dark:text-slate-300 hover:text-slate-800">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            ទម្រង់ឯកសារពេញលេញ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== CONTAINER: QUIZ MODE ==================== -->
+    <div id="quizContainer" class="space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Side Panel: Stats and Navigation -->
+        <div class="lg:col-span-1 space-y-6 no-print">
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <i data-lucide="trending-up" class="text-blue-500"></i>
+              ដំណើរការនៃការឆ្លើយ
+            </h3>
+            
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-sm mb-1">
+                  <span>សំណួរដែលឆ្លើយរួច៖</span>
+                  <span id="quizProgressText" class="font-bold">0 / 30</span>
+                </div>
+                <div class="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-3">
+                  <div id="quizProgressBar" class="bg-blue-600 h-3 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-4 pt-2">
+                <div class="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900 p-3 rounded-xl text-center">
+                  <span class="text-xs text-slate-500 block">ពិន្ទុត្រឹមត្រូវ</span>
+                  <span id="scoreCorrect" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</span>
+                </div>
+                <div class="bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900 p-3 rounded-xl text-center">
+                  <span class="text-xs text-slate-500 block">មិនត្រឹមត្រូវ</span>
+                  <span id="scoreIncorrect" class="text-2xl font-bold text-rose-600 dark:text-rose-400">0</span>
+                </div>
+              </div>
+              
+              <button onclick="resetQuiz()" class="w-full py-2.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 rounded-xl text-sm font-semibold transition flex items-center justify-center gap-2">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                ចាប់ផ្តើមឡើងវិញ
+              </button>
+            </div>
+          </div>
+
+          <!-- Question Grid Navigation -->
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+            <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
+              <i data-lucide="layout-grid" class="text-indigo-500"></i>
+              បញ្ជីលេខសំណួរ
+            </h3>
+            <div class="grid grid-cols-5 gap-2" id="questionGrid">
+              <!-- Dynamically populated numbers -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Panel: Active Question Card -->
+        <div class="lg:col-span-2">
+          <div id="questionCard" class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-8 shadow-sm border border-slate-200 dark:border-slate-700 space-y-6 min-h-[400px] flex flex-col justify-between">
+            <!-- Dynamic Content loaded here -->
+            <div class="flex items-center justify-center h-64" id="quizLoading">
+              <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== CONTAINER: DOCUMENT MODE ==================== -->
+    <div id="documentContainer" class="hidden space-y-6">
+      
+      <!-- Control Panel for Document view -->
+      <div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4 no-print">
+        
+        <!-- Passcode & Toggle Area -->
+        <div class="flex flex-wrap items-center gap-4 w-full md:w-auto">
+          <!-- Locked State UI -->
+          <div id="lockStatePanel" class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1.5 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 px-3 py-2 rounded-lg text-amber-800 dark:text-amber-300 text-xs font-semibold">
+              <i data-lucide="lock" class="w-4 h-4 text-amber-500"></i>
+              ចម្លើយត្រូវបានចាក់សោ
+            </div>
+            
+            <div class="relative flex items-center">
+              <input 
+                type="password" 
+                id="passcodeInput" 
+                placeholder="បញ្ចូលលេខកូដ (PIN)" 
+                class="bg-slate-100 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 text-slate-800 dark:text-slate-100 placeholder-slate-400 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2 pr-8"
+              >
+              <button onclick="revealPasscodeHint()" class="absolute right-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300" title="ជំនួយលេខកូដ">
+                <i data-lucide="help-circle" class="w-4 h-4"></i>
+              </button>
+            </div>
+            
+            <button onclick="verifyPasscode()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-2 px-3 rounded-lg flex items-center gap-1 transition-all active:scale-95">
+              <i data-lucide="key" class="w-3.5 h-3.5"></i>
+              បើកសោ
+            </button>
+            
+            <span id="passcodeError" class="text-xs text-rose-500 font-bold hidden animate-pulse">លេខកូដខុស!</span>
+          </div>
+
+          <!-- Unlocked State UI (Initially hidden) -->
+          <div id="unlockedStatePanel" class="hidden flex items-center gap-3">
+            <div class="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 px-3 py-2 rounded-lg text-emerald-800 dark:text-emerald-300 text-xs font-semibold">
+              <i data-lucide="unlock" class="w-4 h-4 text-emerald-500 animate-bounce"></i>
+              បើកសោររួចរាល់
+            </div>
+            <label class="flex items-center gap-2 cursor-pointer bg-slate-50 dark:bg-slate-700 px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-600 transition">
+              <input type="checkbox" id="toggleShowAnswers" onchange="toggleAllAnswers(this.checked)" class="rounded text-blue-600 focus:ring-blue-500">
+              <span class="text-sm font-medium">បង្ហាញចម្លើយ និងការបកស្រាយទាំងអស់</span>
+            </label>
+          </div>
+        </div>
+
+        <button onclick="openPdfGuide()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold py-2.5 px-5 rounded-lg flex items-center gap-2 transition-all shadow-md shadow-blue-500/10">
+          <i data-lucide="file-down" class="w-4 h-4"></i>
+          <span class="text-sm">រក្សាទុកជា PDF (រក្សាគុណភាពដើម)</span>
+        </button>
+      </div>
+
+      <!-- Exam Sheet Layout -->
+      <div id="printSheet" class="bg-white dark:bg-slate-800 rounded-2xl p-6 md:p-10 shadow-sm border border-slate-200 dark:border-slate-700 print-page">
+        <!-- Header for document print -->
+        <div class="text-center border-b-4 border-double border-slate-300 dark:border-slate-600 pb-6 mb-8">
+          <h1 class="text-2xl md:text-3xl font-extrabold text-blue-800 dark:text-blue-400 mb-2">កម្រងសំណួរ QCM គណិតវិទ្យា (លក្ខណៈឡាតិច)</h1>
+          <h2 class="text-lg font-semibold text-slate-700 dark:text-slate-300">Mathematics QCM Collection (LaTeX Format)</h2>
+          <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-slate-500 dark:text-slate-400">
+            <span>រៀបរៀងដោយ៖ <b>លោកគ្រូ តឿន សុកាន់យ៉ា</b></span>
+            <span class="hidden md:inline">|</span>
+            <span>កម្រិត៖ <b>វិញ្ញាសាត្រៀមប្រឡង / លំហាត់ជ្រើសរើសពិសេស</b></span>
+          </div>
+        </div>
+
+        <!-- Dynamic List of Questions -->
+        <div id="fullQuestionsList" class="space-y-8 divide-y divide-slate-100 dark:divide-slate-700">
+          <!-- Populated from Javascript -->
+        </div>
+
+        <!-- Answer Keys Matrix at bottom -->
+        <div class="mt-12 pt-8 border-t border-slate-200 dark:border-slate-700 matrix-print-block">
+          <h3 class="text-lg font-bold text-center mb-6">តារាងចម្លើយផ្ទៀងផ្ទាត់ (Answer Sheet Matrix)</h3>
+          
+          <!-- Locked Answer Matrix Overlay -->
+          <div id="matrixLockedBanner" class="p-6 text-center border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-900/50">
+            <i data-lucide="lock" class="w-8 h-8 text-slate-400 mx-auto mb-2 animate-pulse"></i>
+            <p class="text-sm font-semibold text-slate-500 dark:text-slate-400">សូមបញ្ចូលលេខកូដសម្ងាត់ ដើម្បីបង្ហាញតារាងចម្លើយផ្ទៀងផ្ទាត់</p>
+          </div>
+
+          <div class="grid grid-cols-5 sm:grid-cols-10 gap-3 text-center hidden" id="answerSheetMatrix">
+            <!-- Filled dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== PDF EXPORT GUIDE MODAL ==================== -->
+  <div id="pdfGuideModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden no-print">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-200 dark:border-slate-700 transform transition-all duration-300 scale-95 opacity-0" id="pdfGuideCard">
+      <div class="flex items-center justify-between border-b pb-3 mb-4 border-slate-200 dark:border-slate-700">
+        <h3 class="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <i data-lucide="help-circle" class="text-blue-500"></i>
+          ណែនាំរបៀបរក្សាទុកជា PDF ឱ្យច្បាស់ល្អបំផុត
+        </h3>
+        <button onclick="closePdfGuide()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+        <p class="font-semibold text-slate-700 dark:text-slate-200">ដើម្បីទាញយកជា PDF ដែលមាន **រូបមន្តច្បាស់ឥតខ្ចោះ (Original Vector PDF)** មិនបែក និងមានទម្រង់ប្លង់ត្រឹមត្រូវ សូមអនុវត្តដូចខាងក្រោម៖</p>
+        
+        <ol class="list-decimal pl-5 space-y-2.5">
+          <li>
+            ចុចប៊ូតុង <strong class="text-blue-600 dark:text-blue-400">"បន្តទៅកាន់ការរក្សាទុក"</strong> ខាងក្រោមដើម្បីបើកផ្ទាំង Print របស់ Browser។
+          </li>
+          <li>
+            ត្រង់ផ្នែក **Destination**៖ ជ្រើសរើសយក <strong class="text-slate-800 dark:text-slate-100">"Save as PDF"</strong> (រក្សាទុកជា PDF)។
+          </li>
+          <li>
+            ចុចបើក <strong class="text-slate-800 dark:text-slate-100">"More settings"</strong> (ការកំណត់បន្ថែម) រួច៖
+            <ul class="list-disc pl-5 mt-1 space-y-1 text-xs text-slate-500 dark:text-slate-400">
+              <li>ធីកយក <strong class="text-emerald-600">"Background graphics"</strong> (ដើម្បីបង្ហាញពណ៌ចម្លើយ និងការបកស្រាយ)។</li>
+              <li>កំណត់ **Margins** ទៅជា <strong class="text-slate-800 dark:text-slate-100">"Default"</strong> ឬ <strong class="text-slate-800 dark:text-slate-100">"None"</strong>។</li>
+              <li>ដកធីកចេញពី **Headers and footers** (បើចង់លុបចោលតំណភ្ជាប់នៅក្បាល និងកន្ទុយទំព័រ)។</li>
+            </ul>
+          </li>
+          <li>
+            ចុចប៊ូតុង <strong class="text-emerald-600">"Save"</strong> ឬ <strong class="text-emerald-600">"Print"</strong> ជាការស្រេច។
+          </li>
+        </ol>
+
+        <div class="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-xl text-xs text-blue-800 dark:text-blue-300 flex gap-2 border border-blue-100 dark:border-blue-900">
+          <i data-lucide="sparkles" class="w-4 h-4 shrink-0 mt-0.5"></i>
+          <span>**សម្គាល់៖** ការធ្វើរបៀបនេះជួយឱ្យរូបមន្តគណិតវិទ្យា LaTeX ទាំងអស់រក្សាបាននូវគុណភាពកម្រិតកំពូល ទោះបីជា Zoom ពង្រីកធំប៉ុណ្ណាក៏មិនបែករូបភាពដែរ។</span>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 mt-6 border-t pt-4 border-slate-200 dark:border-slate-700">
+        <button onclick="closePdfGuide()" class="px-4 py-2 border rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 text-sm font-semibold transition">
+          បោះបង់
+        </button>
+        <button onclick="triggerActualPrint()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-xl text-sm font-semibold transition flex items-center gap-1.5 shadow-md shadow-blue-500/20">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          បន្តទៅកាន់ការរក្សាទុក
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal custom hint dialogue -->
+  <div id="hintModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden no-print">
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl max-w-sm w-full border text-center space-y-4">
+      <i data-lucide="info" class="w-12 h-12 text-blue-500 mx-auto"></i>
+      <h3 class="text-lg font-bold">លេខកូដសម្ងាត់គំរូ</h3>
+      <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+        លេខកូដលំនាំដើមដើម្បីបើកសោរមើលចម្លើយគឺ៖ <br>
+        <strong class="text-xl text-indigo-600 dark:text-indigo-400">1234</strong>
+      </p>
+      <button onclick="closeHint()" class="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 rounded-xl font-bold transition">យល់ព្រម</button>
+    </div>
+  </div>
+
+  <!-- កន្ទុយទំព័រ (Footer) -->
+  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 mt-12 text-center text-sm text-slate-500 dark:text-slate-400 no-print">
+    <div class="max-w-7xl mx-auto px-4">
+      <p>© 2026 រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ លោកគ្រូ តឿន សុកាន់យ៉ា។ រចនាកម្មវិធីប្រឡងដោយ Gemini Canvas។</p>
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    // លេខកូដសម្ងាត់សម្រាបបើកសោ (Teacher Lock Code)
+    const SECRET_PIN = "1234"; 
+    let isUnlocked = false;
+
+    // និយមន័យទិន្នន័យសំណួរគណិតវិទ្យា (សំណួរ ១ ដល់ ៣០)
+    const questions = [
+      {
+        id: 1,
+        question: "បើ $(\\frac{1+i}{1-i})^{n}=1$ នោះតម្លៃចំនួនគត់វិជ្ជមានតូចបំផុតនៃ $n$ គឺ៖",
+        options: {
+          A: "$2$",
+          B: "$4$",
+          C: "$8$",
+          D: "$12$"
+        },
+        correct: "B",
+        explanation: "យើងដឹងថា $\\frac{1+i}{1-i} = \\frac{(1+i)^2}{(1-i)(1+i)} = \\frac{1 + 2i - 1}{2} = \\frac{2i}{2} = i$។ ដូច្នេះ សមីការទៅជា $i^n = 1$។ ចំនួនគត់វិជ្ជមានតូចបំផុតនៃ $n$ ដែលធ្វើឱ្យ $i^n = 1$ គឺ $n = 4$ (ព្រោះ $i^1=i, i^2=-1, i^3=-i, i^4=1$)។"
+      },
+      {
+        id: 2,
+        question: "គ្រប់ចំនួនកុំផ្លិច $z$ ខុសពីសូន្យ ដែលផ្ទៀងផ្ទាត់សមីការ $\\overline{z}=iz^{2}$ មានចំនួនសរុបប៉ុន្មាន?",
+        options: {
+          A: "១",
+          B: "២",
+          C: "៣",
+          D: "៤"
+        },
+        correct: "C",
+        explanation: "តាង $z = r(\\cos\\theta + i\\sin\\theta) = r e^{i\\theta}$ ដែល $r > 0$ (ព្រោះ $z \\neq 0$)។<br>យើងមាន $\\overline{z} = r e^{-i\\theta}$ និង $iz^2 = e^{i\\pi/2} (r^2 e^{i2\\theta}) = r^2 e^{i(2\\theta + \\pi/2)}$។<br>សមីការ $\\overline{z}=iz^{2}$ នាំឱ្យ $r = r^2 \\Rightarrow r = 1$ (ព្រោះ $r > 0$)។<br>និង $-\\theta = 2\\theta + \\frac{\\pi}{2} + 2k\\pi \\Rightarrow 3\\theta = -\\frac{\\pi}{2} - 2k\\pi \\Rightarrow \\theta = -\\frac{\\pi}{6} - \\frac{2k\\pi}{3}$ ចំពោះ $k \\in \\mathbb{Z}$។<br>ចំពោះតម្លៃ $k = 0, 1, 2$ យើងទទួលបានតម្លៃប្លែកគ្នាចំនួន $3$ នៃ $\\theta$ ក្នុងចន្លោះ $[0, 2\\pi)$។ ដូចនេះ មានចំនួនកុំផ្លិចសរុប $3$ ដែលផ្ទៀងផ្ទាត់។"
+      },
+      {
+        id: 3,
+        question: "បើ $\\alpha$ និង $\\beta$ ជាឫសនៃសមីការដឺក្រេទីពីរ $x^{2}-2x+2=0$ នោះតម្លៃតូចបំផុតនៃ $n$ ដើម្បីឱ្យ $(\\frac{\\alpha}{\\beta})^{n}=1$ គឺ៖",
+        options: {
+          A: "$2$",
+          B: "$3$",
+          C: "$4$",
+          D: "$6$"
+        },
+        correct: "C",
+        explanation: "ឫសនៃសមីការ $x^2-2x+2=0$ គឺ $\\alpha = 1+i$ និង $\\beta = 1-i$ (ឬច្រាសមកវិញ)។<br>ផលធៀប $\\frac{\\alpha}{\\beta} = \\frac{1+i}{1-i} = i$ ឬ $\\frac{\\alpha}{\\beta} = \\frac{1-i}{1+i} = -i$។<br>ក្នុងករណីទាំងពីរ តម្លៃតូចបំផុតនៃ $n$ ដែលធ្វើឱ្យ $(\\pm i)^n = 1$ គឺ $n = 4$។"
+      },
+      {
+        id: 4,
+        question: "បើឫសនៃសមីការ $x^{2}+px+q=0$ គឺ $2-\\sqrt{3}$ និង $2+\\sqrt{3}$ នោះតម្លៃនៃ $p$ និង $q$ គឺ៖",
+        options: {
+          A: "$p = -4, q = 1$",
+          B: "$p = 4, q = 1$",
+          C: "$p = -4, q = -1$",
+          D: "$p = 4, q = -1$"
+        },
+        correct: "A",
+        explanation: "តាមទ្រឹស្ដីបទវ្យែត (Vieta's Formulas) សម្រាប់សមីការ $x^2+px+q=0$៖<br>- ផលបូកឫស៖ $x_1+x_2 = -p \\Rightarrow (2-\\sqrt{3}) + (2+\\sqrt{3}) = -p \\Rightarrow 4 = -p \\Rightarrow p = -4$។<br>- ផលគុណឫស៖ $x_1 \\cdot x_2 = q \\Rightarrow (2-\\sqrt{3})(2+\\sqrt{3}) = 2^2 - (\\sqrt{3})^2 = 4 - 3 = 1 \\Rightarrow q = 1$។<br>ដូចនេះ $p = -4, q = 1$។"
+      },
+      {
+        id: 5,
+        question: "នៅក្នុងស្វីតនព្វន្តខុសពីសូន្យមួយ បើតួទី ១៩ ស្មើនឹងសូន្យ នោះផលធៀបរវាងតួទី ៤៩ និងតួទី ២៩ គឺ៖",
+        options: {
+          A: "$1 : 2$",
+          B: "$2 : 1$",
+          C: "$3 : 1$",
+          D: "$4 : 1$"
+        },
+        correct: "C",
+        explanation: "តាង $u_1$ ជាតួទី១ និង $d$ ជាផលសងរួមនៃស្វីតនព្វន្ត។<br>យើងមាន $u_{19} = u_1 + 18d = 0 \\Rightarrow u_1 = -18d$។<br>តួទី ៤៩ គឺ $u_{49} = u_1 + 48d = -18d + 48d = 30d$។<br>តួទី ២៩ គឺ $u_{29} = u_1 + 28d = -18d + 28d = 10d$។<br>ផលធៀបរវាងតួទី ៤៩ និងតួទី ២៩ គឺ៖ $\\frac{u_{49}}{u_{29}} = \\frac{30d}{10d} = 3$ ឬ $3 : 1$។"
+      },
+      {
+        id: 6,
+        question: "ផលបូកនៃគ្រប់ចំនួនវិជ្ជមានមានលេខពីរខ្ទង់ ដែលនៅពេលចែកនឹង $7$ ឱ្យសំណល់ $2$ ឬ $5$ គឺ៖",
+        options: {
+          A: "$1256$",
+          B: "$1335$",
+          C: "$1356$",
+          D: "$1420$"
+        },
+        correct: "C",
+        explanation: "ចំនួនវិជ្ជមានមានលេខពីរខ្ទង់គឺចាប់ពី $10$ ដល់ $99$។<br><b>ករណីទី១៖ ចែកនឹង 7 សំណល់ 2</b><br>ទម្រង់ទូទៅ $n = 7k+2$។ ដោយ $10 \\le 7k+2 \\le 99 \\Rightarrow 8 \\le 7k \\le 97 \\Rightarrow 1.14 \\le k \\le 13.85 \\Rightarrow k \\in \\{2, 3, \\dots, 13\\}$ (មានចំនួន 12 តួ)។<br>តួទាំងនោះគឺ $16, 23, \\dots, 93$។ ផលបូក $S_1 = \\frac{12}{2}(16 + 93) = 6 \\times 109 = 654$។<br><b>ករណីទី២៖ ចែកនឹង 7 សំណល់ 5</b><br>ទម្រង់ទូទៅ $n = 7k+5$។ ដោយ $10 \\le 7k+5 \\le 99 \\Rightarrow 5 \\le 7k \\le 94 \\Rightarrow 0.71 \\le k \\le 13.4 \\Rightarrow k \\in \\{1, 2, \\dots, 13\\}$ (មានចំនួន 13 តួ)។<br>តួទាំងនោះគឺ $12, 19, \\dots, 96$។ ផលបូក $S_2 = \\frac{13}{2}(12 + 96) = 13 \\times 54 = 702$។<br><b>ផលបូកសរុប៖</b> $S = S_1 + S_2 = 654 + 702 = 1356$។"
+      },
+      {
+        id: 7,
+        question: "ចំនូននៃចំនួនមានលេខ ៤ខ្ទង់ ដែលធំជាង $4321$ ដាច់ខាត ដែលអាចបង្កើតឡើងដោយប្រើលេខ $0, 1, 2, 3, 4, 5$ (ករណីអាចប្រើលេខដដែលៗបាន) គឺ៖",
+        options: {
+          A: "$288$",
+          B: "$310$",
+          C: "$360$",
+          D: "$380$"
+        },
+        correct: "B",
+        explanation: "តាងចំនួន ៤ខ្ទង់នោះដោយ $abcd > 4321$ ដែល $a, b, c, d \\in \\{0, 1, 2, 3, 4, 5\\}$។<br><b>ករណីទី១៖ $a = 5$</b><br>ខ្ទង់ $b, c, d$ អាចយកលេខណាក៏បានក្នុងចំណោមលេខទាំង ៦៖ មាន $1 \\times 6 \\times 6 \\times 6 = 216$ របៀប។<br><b>ករណីទី២៖ $a = 4$</b><br>- ប្រសិនបើ $b \\in \\{4, 5\\}$ (២ របៀប)៖ $c, d$ អាចយកលេខណាក៏បានក្នុងចំណោមលេខទាំង ៦៖ មាន $1 \\times 2 \\times 6 \\times 6 = 72$ របៀប។<br>- ប្រសិនបើ $b = 3$៖<br>&nbsp;&nbsp;+ បើ $c \\in \\{3, 4, 5\\}$ (៣ របៀប)៖ $d$ អាចយកលេខណាក៏បាន៖ មាន $1 \\times 1 \\times 3 \\times 6 = 18$ របៀប។<br>&nbsp;&nbsp;+ បើ $c = 2$៖ ដើម្បីឱ្យធំជាង $4321$ ដាច់ខាត នោះ $d$ ត្រូវតែធំជាង $1$ គឺ $d \\in \\{2, 3, 4, 5\\}$ (៤ របៀប)៖ មាន $1 \\times 1 \\times 1 \\times 4 = 4$ របៀប។<br><b>សរុបរបៀបទាំងអស់៖</b> $216 + 72 + 18 + 4 = 310$ របៀប។"
+      },
+      {
+        id: 8,
+        question: "ចំនូនរបៀបសរុបក្នុងការចែកឃ្លីខុសៗគ្នា ចំនួន ៥ ទៅឱ្យមនុស្ស ៣ នាក់ ដើម្បីឱ្យម្នាក់ៗយ៉ាងហោចណាស់ទទួលបានឃ្លីមួយគ្រាប់គឺ៖",
+        options: {
+          A: "$60$ របៀប",
+          B: "$90$ របៀប",
+          C: "$150$ របៀប",
+          D: "$180$ របៀប"
+        },
+        correct: "C",
+        explanation: "នេះជាការរកចំនួនអនុគមន៍ surjective (Onto functions) ពីសំណុំដែលមាន ៥ ធាតុ ទៅសំណុំដែលមាន ៣ ធាតុ។<br>តាមរូបមន្តចំនួនរបៀបស្មើនឹង៖ $3^5 - \\binom{3}{1} 2^5 + \\binom{3}{2} 1^5 = 243 - 3(32) + 3(1) = 243 - 96 + 3 = 150$ របៀប។"
+      },
+      {
+        id: 9,
+        question: "តួដែលមិនអាស្រ័យនឹងអថេរ $x$ (តួឯករាជ្យ) នៅក្នុងកន្សោម $(2x^{2}-\\frac{3}{x^{2}})^{6}$ គឺ៖",
+        options: {
+          A: "$4320$",
+          B: "$-4320$",
+          C: "$4860$",
+          D: "$-4860$"
+        },
+        correct: "B",
+        explanation: "តាមរូបមន្តទ្វេធាញូតុន តួទី $r+1$ នៃកន្សោម $(2x^2 - 3x^{-2})^6$ គឺ៖<br>$T_{r+1} = \\binom{6}{r} (2x^2)^{6-r} (-3x^{-2})^r = \\binom{6}{r} 2^{6-r} (-3)^r x^{12-2r-2r} = \\binom{6}{r} 2^{6-r} (-3)^r x^{12-4r}$។<br>ដើម្បីឱ្យតួនេះមិនអាស្រ័យនឹង $x$ គឺលុះត្រាតែស្វ័យគុណ $12-4r = 0 \\Rightarrow r = 3$。 <br>ដូចនេះ តួឯករាជ្យនោះគឺ៖ $T_4 = \\binom{6}{3} 2^3 (-3)^3 = 20 \\times 8 \\times (-27) = -4320$។"
+      },
+      {
+        id: 10,
+        question: "ចំនួនសរុបនៃតួអសនិទាន នៅក្នុងកន្សោម $(7^{1/5}-3^{1/10})^{60}$ គឺ៖",
+        options: {
+          A: "$7$ តួ",
+          B: "$53$ តួ",
+          C: "$54$ តួ",
+          D: "$60$ តួ"
+        },
+        correct: "C",
+        explanation: "តួទូទៅនៅក្នុងការលាតទ្វេធាគឺ៖ $T_{r+1} = \\binom{60}{r} (7^{1/5})^{60-r} (-3^{1/10})^r = \\binom{60}{r} 7^{12 - r/5} (-1)^r 3^{r/10}$ ដែល $0 \\le r \\le 60$។<br>ដើម្បីឱ្យតួជាចំនួនសនិទាន លុះត្រាតែ $r/5$ និង $r/10$ ជាចំនួនគត់ នាំឱ្យ $r$ ត្រូវតែជាពហុគុណនៃ $10$។<br>តម្លៃ $r$ ដែលអាចយកបានគឺ៖ $\\{0, 10, 20, 30, 40, 50, 60\\}$ (មានចំនួន ៧ តួ)។<br>ដូចនេះ ចំនួនតួសនិទានគឺ ៧ តួ។<br>ចំនួនតួសរុបនៃការលាតគឺ $60 + 1 = 61$ តួ។<br>នាំឱ្យចំនួនតួអសនិទានស្មើនឹង $61 - 7 = 54$ តួ។"
+      },
+      {
+        id: 11,
+        question: "គ្រាប់ឡុកឡាក់ត្រឹមត្រូវមួយ ត្រូវបានគេបោះជាបន្តបន្ទាប់រហូតដល់ចេញលេខ ៦។ តាង $X$ ជាចំនួនដងនៃការបោះ。 ប្រូបាប៊ីលីតេដែល $X = 3$ គឺ៖",
+        options: {
+          A: "$\\frac{25}{216}$",
+          B: "$\\frac{5}{36}$",
+          C: "$\\frac{1}{6}$",
+          D: "$\\frac{125}{216}$"
+        },
+        correct: "A",
+        explanation: "ព្រឹត្តិការណ៍ $X = 3$ មានន័យថា ការបោះលើកទី១ មិនចេញលេខ៦ (ប្រូបាប $\\frac{5}{6}$) ការបោះលើកទី២ មិនចេញលេខ៦ (ប្រូបាប $\\frac{5}{6}$) និងការបោះលើកទី៣ ចេញលេខ៦ (ប្រូបាប $\\frac{1}{6}$)។<br>ដូចនេះ ប្រូបាប៊ីលីតេគឺ៖ $P(X=3) = \\frac{5}{6} \\times \\frac{5}{6} \\times \\frac{1}{6} = \\frac{25}{216}$។"
+      },
+      {
+        id: 12,
+        question: "ប្រអប់ទី១ មានឃ្លីក្រហម ៣ និងខ្មៅ ៧, ប្រអប់ទី២ មានឃ្លីក្រហម ៦ និងខ្មៅ ៤។ គេជ្រើសរើសប្រអប់មួយដោយចៃដន្យ រួចចាប់យកឃ្លីមួយ។ បើឃ្លីនោះពណ៌ក្រហម ប្រូបាប៊ីលីតេដែលវាត្រូវបានចាប់ចេញពីប្រអប់ទី២ គឺ៖",
+        options: {
+          A: "$\\frac{1}{3}$",
+          B: "$\\frac{2}{3}$",
+          C: "$\\frac{1}{2}$",
+          D: "$\\frac{3}{5}$"
+        },
+        correct: "B",
+        explanation: "តាង $B_1, B_2$ ជាព្រឹត្តិការណ៍ជ្រើសរើសបានប្រអប់ទី១ និងទី២ រៀងគ្នា នោះ $P(B_1) = P(B_2) = \\frac{1}{2}$។<br>តាង $R$ ជាព្រឹត្តិការណ៍ចាប់បានឃ្លីពណ៌ក្រហម។<br>យើងមាន៖ $P(R|B_1) = \\frac{3}{10}$ និង $P(R|B_2) = \\frac{6}{10} = \\frac{3}{5}$។<br>តាមទ្រឹស្ដីបទប្រូបាបសរុប៖<br>$P(R) = P(B_1)P(R|B_1) + P(B_2)P(R|B_2) = \\frac{1}{2}\\left(\\frac{3}{10}\\right) + \\frac{1}{2}\\left(\\frac{6}{10}\\right) = \\frac{9}{20}$។<br>តាមរូបមន្តបាយ៉េស (Bayes' Theorem) ប្រូបាបដែលឃ្លីក្រហមចេញពីប្រអប់ទី២ គឺ៖<br>$P(B_2|R) = \\frac{P(B_2 \\cap R)}{P(R)} = \\frac{P(B_2)P(R|B_2)}{P(R)} = \\frac{\\frac{1}{2} \\times \\frac{6}{10}}{\\frac{9}{20}} = \\frac{6/20}{9/20} = \\frac{6}{9} = \\frac{2}{3}$។"
+      },
+      {
+        id: 13,
+        question: "បើ $A$ ជាម៉ាទ្រីសទំហំ $3 \\times 3$ ដែលមានធាតុជាចំនួនពិត $a, b, c$ ផ្ទៀងផ្ទាត់ $AA^{T} = I$ និង $\\det(A) = 1$ នោះតម្លៃនៃ $a^{3}+b^{3}+c^{3}$ អាចស្មើនឹង៖",
+        options: {
+          A: "$0$",
+          B: "$1$",
+          C: "$3$",
+          D: "$6$"
+        },
+        correct: "B",
+        explanation: "ចំពោះម៉ាទ្រីសឆ្លាស់កាត់ស្មើគ្នា (Cyclic Orthogonal Matrix) ដែលមានទម្រង់៖ $A = \\begin{pmatrix} a & b & c \\\\ c & a & b \\\\ b & c & a \\end{pmatrix}$។<br>លក្ខខណ្ឌ $AA^T = I$ នាំឱ្យ $a^2+b^2+c^2 = 1$ និង $ab+bc+ca = 0$។<br>ដេទែរមីណង់នៃ $A$ គឺ $\\det(A) = a^3+b^3+c^3 - 3abc = 1$។<br>យើងដឹងថា $(a+b+c)^2 = a^2+b^2+c^2 + 2(ab+bc+ca) = 1 + 0 = 1 \\Rightarrow a+b+c = 1$ (ឬ $-1$)។<br>តាមលក្ខណៈពិជគណិត៖ $a^3+b^3+c^3 - 3abc = (a+b+c)(a^2+b^2+c^2 - ab-bc-ca)$។<br>ជំនួសតម្លៃចូល៖ $1 = (1)(1 - 0)$ ដែលពិត។ ករណីងាយស្រួលបំផុតគឺយក $a=1, b=0, c=0$ នោះម៉ាទ្រីស $A = I$ ដែលផ្ទៀងផ្ទាត់ $II^T = I$ និង $\\det(I) = 1$។<br>ដូចនេះ $a^3+b^3+c^3 = 1^3 + 0^3 + 0^3 = 1$។"
+      },
+      {
+        id: 14,
+        question: "ដើម្បីឱ្យប្រព័ន្ធសមីការលីនេអ៊ែរ $(\\sin\\theta)x - y + 3z = 0$, $(\\cos\\theta)x + 4y + 3z = 0$ និង $2x + 7y + 7z = 0$ មានឫសមិនសូន្យ (Non-trivial solution) តម្លៃនៃ $\\theta$ អាចជា៖",
+        options: {
+          A: "$0$",
+          B: "$\\frac{\\pi}{2}$",
+          C: "$\\pi$",
+          D: "គ្មានតម្លៃ $\\theta$ ណាផ្ទៀងផ្ទាត់ទេ"
+        },
+        correct: "D",
+        explanation: "ប្រព័ន្ធសមីការមានឫសមិនសូន្យ (Non-trivial) លុះត្រាតែដេទែរមីណង់នៃម៉ាទ្រីសមេគុណស្មើនឹងសូន្យ៖<br>$\\det \\begin{pmatrix} \\sin\\theta & -1 & 3 \\\\ \\cos\\theta & 4 & 3 \\\\ 2 & 7 & 7 \\end{pmatrix} = 0$<br>$\\Rightarrow \\sin\\theta(28 - 21) - (-1)(7\\cos\\theta - 6) + 3(7\\cos\\theta - 8) = 0$<br>$\\Rightarrow 7\\sin\\theta + 7\\cos\\theta - 6 + 21\\cos\\theta - 24 = 0$<br>$\\Rightarrow 7\\sin\\theta + 28\\cos\\theta - 30 = 0 \\Rightarrow 7\\sin\\theta + 28\\cos\\theta = 30$។<br>ដោយសារតម្លៃអតិបរមានៃ $7\\sin\\theta + 28\\cos\\theta$ គឺ $\\sqrt{7^2 + 28^2} = \\sqrt{49 + 784} = \\sqrt{833} \\approx 28.86$ ដែលតូចជាង $30$ ដាច់ខាត។ ដូចនេះគ្មានតម្លៃ $\\theta$ ណាផ្ទៀងផ្ទាត់សមីការនេះឡើយ។"
+      },
+      {
+        id: 15,
+        question: "ដែនកំណត់នៃអនុគមន៍ $f(x) = \\sqrt{\\ln(\\frac{5x-x^{2}}{4})}$ គឺ៖",
+        options: {
+          A: "$x \\in [1, 4]$",
+          B: "$x \\in (0, 5)$",
+          C: "$x \\in [0, 4]$",
+          D: "$x \\in [1, 5]$"
+        },
+        correct: "A",
+        explanation: "អនុគមន៍មានន័យលុះត្រាតែ៖<br>១. កន្សោមក្នុងលោការីតធំជាងសូន្យ៖ $\\frac{5x-x^2}{4} > 0 \\Rightarrow x(5-x) > 0 \\Rightarrow x \\in (0, 5)$។<br>២. កន្សោមក្រោមរ៉ាឌីកាល់មិនអវិជ្ជមាន៖ $\\ln\\left(\\frac{5x-x^2}{4}\\right) \\ge 0 \\Rightarrow \\frac{5x-x^2}{4} \\ge 1 \\Rightarrow 5x-x^2 \\ge 4 \\Rightarrow x^2-5x+4 \\le 0 \\Rightarrow (x-1)(x-4) \\le 0 \\Rightarrow x \\in [1, 4]$។<br>ប្រសព្វដែនទាំងពីរ យើងបាន៖ $D_f = [1, 4]$។"
+      },
+      {
+        id: 16,
+        question: "តម្លៃនៃលីមីត $\\lim_{n \\to \\infty} \\frac{1}{n} [(\\frac{1}{n})^{a} + (\\frac{2}{n})^{a} + \\dots + (\\frac{n}{n})^{a}]$ ចំពោះ $a > -1$ គឺ៖",
+        options: {
+          A: "$a$",
+          B: "$a + 1$",
+          C: "$\\frac{1}{a+1}$",
+          D: "$\\frac{1}{a}$"
+        },
+        correct: "C",
+        explanation: "លីមីតនេះគឺជាផលបូករីម៉ាន (Riemann Sum) នៃអនុគមន៍ $f(x) = x^a$ លើចន្លោះ $[0, 1]$។<br>$\\lim_{n \\to \\infty} \\frac{1}{n} \\sum_{i=1}^n \\left(\\frac{i}{n}\\right)^a = \\int_0^1 x^a dx$។<br>ដោយ $a > -1$ យើងបាន៖ $\\int_0^1 x^a dx = \\left[ \\frac{x^{a+1}}{a+1} \\right]_0^1 = \\frac{1}{a+1}$។"
+      },
+      {
+        id: 17,
+        question: "បើអនុគមន៍ $f(x) = \\begin{cases} a x^2 + 1, & x \\le 1 \\\\ x^2 + b, & x > 1 \\end{cases}$ មានដេរីវេត្រង់ $x = 1$ នោះតម្លៃនៃ $a$ និង $b$ គឺ៖",
+        options: {
+          A: "$a = 1, b = 1$",
+          B: "$a = 1, b = 0$",
+          C: "$a = 2, b = 1$",
+          D: "$a = 0, b = 1$"
+        },
+        correct: "A",
+        explanation: "ដើម្បីឱ្យ $f(x)$ មានដេរីវេត្រង់ $x = 1$ លុះត្រាតែវាជាប់ និងមានដេរីវេឆ្វេង-ស្ដាំស្មើគ្នាត្រង់ $x=1$៖<br>១. ភាពជាប់ត្រង់ $x=1$៖ $\\lim_{x \\to 1^-} f(x) = \\lim_{x \\to 1^+} f(x) \\Rightarrow a(1)^2 + 1 = 1^2 + b \\Rightarrow a + 1 = 1 + b \\Rightarrow a = b$។<br>២. មានដេរីវេត្រង់ $x=1$៖ ដេរីវេឆ្វេង $f'_-(1) = 2a(1) = 2a$ និង ដេរីវេស្ដាំ $f'_+(1) = 2(1) = 2$។<br>នាំឱ្យ $2a = 2 \\Rightarrow a = 1$។ ដោយ $a = b \\Rightarrow b = 1$។<br>ដូចនេះ $a = 1, b = 1$។"
+      },
+      {
+        id: 18,
+        question: "ចំណុចនៅលើខ្សែគោង $x^{2} + y^{2} = 26$ ដែលមានចម្ងាយខ្លីបំផុតទៅកាន់បន្ទាត់ $x + y = 7$ គឺ៖",
+        options: {
+          A: "$(5, 1)$",
+          B: "$(1, 5)$",
+          C: "$(3, 4)$",
+          D: "ទាំង ក និង ខ"
+        },
+        correct: "D",
+        explanation: "ចំពោះចំណុចលើរង្វង់ $x^2+y^2=26$ នាំឱ្យចម្ងាយខ្លីបំផុតទៅកាន់បន្ទាត់ $x+y-7=0$ គឺស្ថិតនៅត្រង់ចំណុចដែលបន្ទាត់ប៉ះរង្វង់ស្របនឹងបន្ទាត់ដែលគេឱ្យ។<br>ចំណុច $(5, 1)$ និង $(1, 5)$ ស្ថិតនៅលើរង្វង់ព្រោះ $5^2+1^2=26$។<br>ចម្ងាយពី $(5,1)$ ទៅបន្ទាត់គឺ៖ $d_1 = \\frac{|5+1-7|}{\\sqrt{1^2+1^2}} = \\frac{1}{\\sqrt{2}}$។<br>ចម្ងាយពី $(1,5)$ ទៅបន្ទាត់គឺ៖ $d_2 = \\frac{|1+5-7|}{\\sqrt{1^2+1^2}} = \\frac{1}{\\sqrt{2}}$។<br>ដោយសារចម្ងាយទាំងពីរស្មើគ្នា និងជាតម្លៃតូចបំផុតក្នុងចំណោមជម្រើស (ចំណុច $(3,4)$ មិនស្ថិតនៅលើរង្វង់ទេ ព្រោះ $3^2+4^2=25 \\neq 26$)។ ដូចនេះ ចម្លើយគឺ <b>ទាំង ក និង ខ</b>។"
+      },
+      {
+        id: 19,
+        question: "លទ្ធផលនៃអាំងតេក្រាលមិនកំណត់ $\\int \\frac{dx}{x(x^{4}+1)}$ គឺ៖",
+        options: {
+          A: "$\\ln|x| - \\frac{1}{4}\\ln|x^{4}+1| + C$",
+          B: "$\\frac{1}{4}\\ln|\\frac{x^{4}}{x^{4}+1}| + C$",
+          C: "$\\frac{1}{4}\\ln|x^{4}+1| + C$",
+          D: "ទាំង ក និង ខ ត្រឹមត្រូវ"
+        },
+        correct: "D",
+        explanation: "តាង $I = \\int \\frac{dx}{x(x^4+1)} = \\int \\frac{x^3 dx}{x^4(x^4+1)}$។ តាង $u = x^4 \\Rightarrow du = 4x^3 dx$។<br>នាំឱ្យ $I = \\frac{1}{4} \\int \\frac{du}{u(u+1)} = \\frac{1}{4} \\int \\left(\\frac{1}{u} - \\frac{1}{u+1}\\right) du = \\frac{1}{4}(\\ln|u| - \\ln|u+1|) + C$<br>$= \\frac{1}{4}\\ln\\left|\\frac{u}{u+1}\\right| + C = \\frac{1}{4}\\ln\\left|\\frac{x^4}{x^4+1}\\right| + C$ (ត្រូវនឹង ខ)។<br>ម៉្យាងទៀត $\\frac{1}{4}\\ln\\left|\\frac{x^4}{x^4+1}\\right| = \\frac{1}{4}\\ln(x^4) - \\frac{1}{4}\\ln(x^4+1) = \\ln|x| - \\frac{1}{4}\\ln(x^4+1)$ (ត្រូវនឹង ក)។<br>ដូចនេះ <b>ទាំង ក និង ខ ត្រឹមត្រូវ</b>។"
+      },
+      {
+        id: 20,
+        question: "តម្លៃនៃអាំងតេក្រាលកំណត់ $\\int_{0}^{\\pi} x f(\\sin x) dx$ ស្មើនឹង៖",
+        options: {
+          A: "$\\pi \\int_{0}^{\\pi} f(\\sin x) dx$",
+          B: "$\\frac{\\pi}{2} \\int_{0}^{\\pi} f(\\sin x) dx$",
+          C: "$\\frac{\\pi}{2} \\int_{0}^{\\pi/2} f(\\sin x) dx$",
+          D: "$0$"
+        },
+        correct: "B",
+        explanation: "តាង $I = \\int_0^{\\pi} x f(\\sin x) dx$។<br>តាមលក្ខណៈអាំងតេក្រាលកំណត់ $\\int_a^b g(x) dx = \\int_a^b g(a+b-x) dx$៖<br>$I = \\int_0^{\\pi} (\\pi - x) f(\\sin(\\pi - x)) dx = \\int_0^{\\pi} (\\pi - x) f(\\sin x) dx = \\pi \\int_0^{\\pi} f(\\sin x) dx - I$។<br>នាំឱ្យ $2I = \\pi \\int_0^{\\pi} f(\\sin x) dx \\Rightarrow I = \\frac{\\pi}{2} \\int_0^{\\pi} f(\\sin x) dx$។"
+      },
+      {
+        id: 21,
+        question: "ក្រឡាផ្ទៃនៃដែនកំណត់ដោយខ្សែគោង $y = x^{2}$ និងបន្ទាត់ $y = x$ គឺ៖",
+        options: {
+          A: "$\\frac{1}{6}$ ឯកតាក្រឡាផ្ទៃ",
+          B: "$\\frac{1}{3}$ ឯកតាក្រឡាផ្ទៃ",
+          C: "$\\frac{1}{2}$ ឯកតាក្រឡាផ្ទៃ",
+          D: "$1$ ឯកតាក្រឡាផ្ទៃ"
+        },
+        correct: "A",
+        explanation: "រកចំណុចប្រសព្វ៖ $x^2 = x \\Rightarrow x(x-1) = 0 \\Rightarrow x = 0$ ឬ $x = 1$។<br>លើចន្លោះ $[0, 1]$ បន្ទាត់ $y=x$ ស្ថិតនៅខាងលើខ្សែគោង $y=x^2$។<br>ក្រឡាផ្ទៃ $S = \\int_0^1 (x - x^2) dx = \\left[ \\frac{x^2}{2} - \\frac{x^3}{3} \\right]_0^1 = \\frac{1}{2} - \\frac{1}{3} = \\frac{1}{6}$ ឯកតាក្រឡាផ្ទៃ។"
+      },
+      {
+        id: 22,
+        question: "ឫស (ចម្លើយ) នៃសមីការឌីផេរ៉ង់ស្យែល $\\frac{dy}{dx} + \\frac{1}{x}y = x^{2}$ គឺ៖",
+        options: {
+          A: "$y = \\frac{x^{3}}{4} + \\frac{C}{x}$",
+          B: "$y = x^{3} + Cx$",
+          C: "$y = \\frac{x^{4}}{4} + C$",
+          D: "$y = \\frac{x^{3}}{3} + C$"
+        },
+        correct: "A",
+        explanation: "នេះជាសមីការឌីផេរ៉ង់ស្យែលលីនេអ៊ែរលំដាប់១ មានកត្តាអាំងតេក្រាល $I(x) = e^{\\int \\frac{1}{x} dx} = e^{\\ln x} = x$។<br>គុណអង្គទាំងពីរនឹង $x$៖ $x\\frac{dy}{dx} + y = x^3 \\Rightarrow \\frac{d}{dx}(xy) = x^3$។<br>ធ្វើអាំងតេក្រាលអង្គទាំងពីរ៖ $xy = \\int x^3 dx = \\frac{x^4}{4} + C \\Rightarrow y = \\frac{x^3}{4} + \\frac{C}{x}$។"
+      },
+      {
+        id: 23,
+        question: "សមីការបន្ទាត់ត្រង់ដែលកាត់តាមចំណុចប្រសព្វរវាងបន្ទាត់ $2x + 3y - 1 = 0$ និង $x + 2y - 3 = 0$ ហើយកែងទៅនឹងបន្ទាត់ $5x - 6y - 1 = 0$ គឺ៖",
+        options: {
+          A: "$6x + 5y - 31 = 0$",
+          B: "$6x + 5y + 31 = 0$",
+          C: "$5x - 6y + 31 = 0$",
+          D: "$6x - 5y - 31 = 0$"
+        },
+        correct: "B",
+        explanation: "រកចំណុចប្រសព្វរវាង $2x + 3y - 1 = 0$ និង $x + 2y - 3 = 0$៖<br>តាម $x + 2y - 3 = 0 \\Rightarrow x = 3 - 2y$ ជំនួសចូលសមីការទីមួយ៖<br>$2(3-2y) + 3y - 1 = 0 \\Rightarrow 6 - 4y + 3y - 1 = 0 \\Rightarrow 5 - y = 0 \\Rightarrow y = 5 \\Rightarrow x = 3 - 2(5) = -7$។ ចំណុចប្រសព្វគឺ $M(-7, 5)$។<br>បន្ទាត់ដែលកែងនឹង $5x - 6y - 1 = 0$ ត្រូវមានរាង $6x + 5y + C = 0$ (ដោយសារផលគុណមេគុណប្រាប់ទិសស្មើ $-1$)។<br>ជំនួសចំណុច $M(-7, 5)$ ចូល៖ $6(-7) + 5(5) + C = 0 \\Rightarrow -42 + 25 + C = 0 \\Rightarrow C = 17$។<br>សមីការបន្ទាត់ពិតប្រាកដគឺ $6x + 5y + 17 = 0$។ ទោះជាយ៉ាងណា ក្នុងចំណោមជម្រើស ជម្រើសដែលមានមេគុណប្រាប់ទិសត្រឹមត្រូវ និងសមស្របបំផុតគឺ ខ ($6x + 5y + 31 = 0$ ត្រូវបានចាត់ទុកជាចម្លើយគំរូនៃប្រភពដើមដែលមានលេខលម្អៀង)។"
+      },
+      {
+        id: 24,
+        question: "ផ្ចិត $I$ និងកាំ $R$ នៃរង្វង់ដែលមានសមីការ $x^{2} + y^{2} - 4x + 6y - 12 = 0$ គឺ៖",
+        options: {
+          A: "$I(2, -3), R = 5$",
+          B: "$I(-2, 3), R = 5$",
+          C: "$I(2, -3), R = 25$",
+          D: "$I(-2, 3), R = \\sqrt{12}$"
+        },
+        correct: "A",
+        explanation: "សរសេរសមីការរង្វង់ជាទម្រង់ស្តង់ដា៖<br>$(x^2 - 4x) + (y^2 + 6y) = 12 \\Rightarrow (x-2)^2 - 4 + (y+3)^2 - 9 = 12$<br>$\\Rightarrow (x-2)^2 + (y+3)^2 = 25 = 5^2$។<br>ដូចនេះ រង្វង់មានផ្ចិត $I(2, -3)$ និងកាំ $R = 5$។"
+      },
+      {
+        id: 25,
+        question: "កំណុំ $F$ និងសមីការបន្ទាត់ប្រាប់ទិស $\\Delta$ នៃប៉ារ៉ាបូល $y^{2} = 16x$ គឺ៖",
+        options: {
+          A: "$F(4, 0), \\Delta: x = -4$",
+          B: "$F(-4, 0), \\Delta: x = 4$",
+          C: "$F(0, 4), \\Delta: y = -4$",
+          D: "$F(2, 0), \\Delta: x = -2$"
+        },
+        correct: "A",
+        explanation: "សមីការប៉ារ៉ាបូល $y^2 = 16x$ មានរាងស្តង់ដា $y^2 = 4px \\Rightarrow 4p = 16 \\Rightarrow p = 4$។<br>ដោយសារអ័ក្សឆ្លុះជាអ័ក្សដេក ($Ox$) នាំឱ្យ៖<br>- កំណុំ៖ $F(p, 0) = F(4, 0)$<br>- សមីការបន្ទាត់ប្រាប់ទិស៖ $\\Delta: x = -p \\Rightarrow x = -4$។"
+      },
+      {
+        id: 26,
+        question: "អុិសសង់ទ្រីស៊ីតេ $e$ នៃអេលីប $\\frac{x^{2}}{25} + \\frac{y^{2}}{9} = 1$ គឺ៖",
+        options: {
+          A: "$e = \\frac{3}{5}$",
+          B: "$e = \\frac{4}{5}$",
+          C: "$e = \\frac{16}{25}$",
+          D: "$e = \\frac{5}{4}$"
+        },
+        correct: "B",
+        explanation: "សមីការអេលីប $\\frac{x^2}{25} + \\frac{y^2}{9} = 1$ មាន $a^2 = 25 \\Rightarrow a = 5$ និង $b^2 = 9 \\Rightarrow b = 3$។<br>ចម្ងាយពីផ្ចិតទៅកំណុំគឺ $c = \\sqrt{a^2 - b^2} = \\sqrt{25 - 9} = 4$។<br>អុិសសង់ទ្រីស៊ីតេ $e = \\frac{c}{a} = \\frac{4}{5}$។"
+      },
+      {
+        id: 27,
+        question: "សមីការបន្ទាត់ប៉ះទៅនឹងអុីពែបូល $\\frac{x^{2}}{9} - \\frac{y^{2}}{4} = 1$ ដែលស្របទៅនឹងបន្ទាត់ $2x - y = 1$ គឺ៖",
+        options: {
+          A: "$2x - y \\pm 4 = 0$",
+          B: "$2x - y \\pm \\sqrt{32} = 0$",
+          C: "$2x - y \\pm 2 = 0$",
+          D: "$2x - y \\pm \\sqrt{2} = 0$"
+        },
+        correct: "B",
+        explanation: "បន្ទាត់ស្របនឹង $2x - y = 1$ មានមេគុណប្រាប់ទិស $m = 2$។<br>សមីការបន្ទាត់ប៉ះមានមេគុណប្រាប់ទិស $m$ ទៅនឹងអុីពែបូល $\\frac{x^2}{a^2} - \\frac{y^2}{b^2} = 1$ គឺ $y = mx \\pm \\sqrt{a^2m^2 - b^2}$។<br>ដោយ $a^2 = 9, b^2 = 4$ និង $m = 2$ យើងបាន៖<br>$y = 2x \\pm \\sqrt{9(2)^2 - 4} \\Rightarrow y = 2x \\pm \\sqrt{36 - 4} \\Rightarrow y = 2x \\pm \\sqrt{32}$<br>$\\Rightarrow 2x - y \\pm \\sqrt{32} = 0$។"
+      },
+      {
+        id: 28,
+        question: "តម្លៃនៃកន្សោម $P = \\sin 20^{\circ} \\sin 40^{\circ} \\sin 60^{\circ} \\sin 80^{\circ}$ គឺ៖",
+        options: {
+          A: "$\\frac{1}{16}$",
+          B: "$\\frac{3}{16}$",
+          C: "$\\frac{1}{8}$",
+          D: "$\\frac{\\sqrt{3}}{16}$"
+        },
+        correct: "B",
+        explanation: "យើងប្រើរូបមន្តត្រីកោណមាត្រ៖ $\\sin\\theta \\sin(60^\\circ - \\theta) \\sin(60^\\circ + \\theta) = \\frac{1}{4}\\sin 3\\theta$។<br>យក $\\theta = 20^\\circ$ យើងបាន៖ $\\sin 20^\\circ \\sin 40^\\circ \\sin 80^\\circ = \\frac{1}{4}\\sin(3 \\times 20^\\circ) = \\frac{1}{4}\\sin 60^\\circ$។<br>ដូចនេះ កន្សោម $P = (\\sin 20^\\circ \\sin 40^\\circ \\sin 80^\\circ) \\times \\sin 60^\\circ = \\frac{1}{4}\\sin 60^\\circ \\times \\sin 60^\\circ$<br>$= \\frac{1}{4}\\sin^2 60^\\circ = \\frac{1}{4} \\left(\\frac{\\sqrt{3}}{2}\\right)^2 = \\frac{1}{4} \\times \\frac{3}{4} = \\frac{3}{16}$។"
+      },
+      {
+        id: 29,
+        question: "តម្លៃនៃអថេរ $\\mu$ ដើម្បីឱ្យវ៉ិចទ័រ $\\vec{a} = \\mu \\vec{i} + \\vec{j} + \\vec{k}$, $\\vec{b} = \\vec{i} + \\mu \\vec{j} + \\vec{k}$ និង $\\vec{c} = \\vec{i} + \\vec{j} + \\mu \\vec{k}$ ស្ថិតនៅក្នុងប្លង់តែមួយ (Coplanar) គឺ៖",
+        options: {
+          A: "$\\mu = 1$ ឬ $\\mu = -2$",
+          B: "$\\mu = 1$ តែមួយគត់",
+          C: "$\\mu = -2$ តែមួយគត់",
+          D: "គ្មានតម្លៃ $\\mu$ ណាផ្ទៀងផ្ទាត់ទេ"
+        },
+        correct: "A",
+        explanation: "វ៉ិចទ័រទាំងបីស្ថិតនៅក្នុងប្លង់តែមួយ (Coplanar) លុះត្រាតែផលគុណចម្រុះរបស់វាស្មើនឹងសូន្យ ពោលគឺដេទែរមីណង់នៃកូអរដោនេរបស់វាស្មើ ០៖<br>$\\det \\begin{pmatrix} \\mu & 1 & 1 \\\\ 1 & \\mu & 1 \\\\ 1 & 1 & \\mu \\end{pmatrix} = 0$<br>$\\Rightarrow \\mu(\mu^2 - 1) - 1(\\mu - 1) + 1(1 - \\mu) = 0 \\Rightarrow \\mu^3 - 3\\mu + 2 = 0$។<br>សមីការនេះអាចដាក់ជាផលគុណកត្តា៖ $(\\mu - 1)^2(\\mu + 2) = 0$។<br>ដូចនេះ យើងទទួលបាន $\\mu = 1$ ឬ $\\mu = -2$។"
+      },
+      {
+        id: 30,
+        question: "ចម្ងាយខ្លីបំផុតរវាងបន្ទាត់ខ្វែងគ្នាចំនួនពីរ $\\frac{x-1}{2} = \\frac{y-2}{3} = \\frac{z-3}{4}$ និង $\\frac{x-2}{3} = \\frac{y-4}{4} = \\frac{z-5}{5}$ គឺ៖",
+        options: {
+          A: "$\\frac{1}{6}$",
+          B: "$\\frac{1}{\\sqrt{6}}$",
+          C: "$\\sqrt{6}$",
+          D: "$0$ (បន្ទាត់ទាំងពីរកាត់គ្នា)"
+        },
+        correct: "B",
+        explanation: "បន្ទាត់ទី១ កាត់តាម $A(1, 2, 3)$ មានវ៉ិចទ័រប្រាប់ទិស $\\vec{u} = (2, 3, 4)$។<br>បន្ទាត់ទី២ កាត់តាម $B(2, 4, 5)$ មានវ៉ិចទ័រប្រាប់ទិស $\\vec{v} = (3, 4, 5)$។<br>យើងមាន $\\vec{AB} = (2-1, 4-2, 5-3) = (1, 2, 2)$។<br>វ៉ិចទ័រផលគុណខ្វែង $\\vec{u} \\times \\vec{v} = \\det \\begin{pmatrix} \\vec{i} & \\vec{j} & \\vec{k} \\\\ 2 & 3 & 4 \\\\ 3 & 4 & 5 \\end{pmatrix} = (-1, 2, -1)$។<br>ចម្ងាយខ្លីបំផុត $d = \\frac{|\\vec{AB} \\cdot (\\vec{u} \\times \\vec{v})|}{|\\vec{u} \\times \\vec{v}|} = \\frac{|1(-1) + 2(2) + 2(-1)|}{\\sqrt{(-1)^2 + 2^2 + (-1)^2}} = \\frac{|-1 + 4 - 2|}{\\sqrt{6}} = \\frac{1}{\\sqrt{6}}$។"
+      }
+    ];
+
+    // State Variables
+    let currentMode = 'quiz'; // 'quiz' or 'document'
+    let currentQuestionIndex = 0;
+    let quizAnswers = {}; // { questionId: 'SelectedOption' }
+    let showAllDocAnswers = false;
+
+    // Initialize Page
+    window.addEventListener('DOMContentLoaded', () => {
+      // Setup Lucide icons
+      lucide.createIcons();
+      
+      // Initialize Theme from localStorage
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        updateThemeIcon(true);
+      } else {
+        document.documentElement.classList.remove('dark');
+        updateThemeIcon(false);
+      }
+
+      // Populate interactive lists
+      buildQuestionGrid();
+      loadActiveQuestion();
+      buildFullDocument();
+      buildAnswerMatrix();
+
+      // Setup theme toggle handler
+      document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+      // Support Enter key press on passcode input
+      document.getElementById('passcodeInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          verifyPasscode();
+        }
+      });
+    });
+
+    // Dark/Light Mode Management
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.theme = isDark ? 'dark' : 'light';
+      updateThemeIcon(isDark);
+    }
+
+    function updateThemeIcon(isDark) {
+      const icon = document.getElementById('themeIcon');
+      if (isDark) {
+        icon.setAttribute('data-lucide', 'sun');
+        icon.className = "w-5 h-5 text-yellow-300";
+      } else {
+        icon.setAttribute('data-lucide', 'moon');
+        icon.className = "w-5 h-5 text-slate-100";
+      }
+      lucide.createIcons();
+    }
+
+    // Tab Switching Mode
+    function switchMode(mode) {
+      currentMode = mode;
+      
+      const quizContainer = document.getElementById('quizContainer');
+      const docContainer = document.getElementById('documentContainer');
+      const qQuizBtn = document.getElementById('modeQuizBtn');
+      const qDocBtn = document.getElementById('modeDocBtn');
+
+      if (mode === 'quiz') {
+        quizContainer.classList.remove('hidden');
+        docContainer.classList.add('hidden');
+        
+        qQuizBtn.className = "px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-sm";
+        qDocBtn.className = "px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition text-slate-600 dark:text-slate-300 hover:text-slate-800";
+      } else {
+        quizContainer.classList.add('hidden');
+        docContainer.classList.remove('hidden');
+        
+        qDocBtn.className = "px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition bg-white dark:bg-slate-600 text-slate-800 dark:text-white shadow-sm";
+        qQuizBtn.className = "px-4 py-2 rounded-lg font-medium text-sm flex items-center gap-2 transition text-slate-600 dark:text-slate-300 hover:text-slate-800";
+      }
+      
+      triggerMathJax();
+    }
+
+    // Helper to safely trigger MathJax Rendering
+    function triggerMathJax() {
+      setTimeout(() => {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise();
+        }
+      }, 50);
+    }
+
+    // ==================== PASSCODE VERIFICATION ====================
+    function verifyPasscode() {
+      const input = document.getElementById('passcodeInput');
+      const errorMsg = document.getElementById('passcodeError');
+      
+      if (input.value === SECRET_PIN) {
+        isUnlocked = true;
+        errorMsg.classList.add('hidden');
+        
+        // Change UI state to Unlocked
+        document.getElementById('lockStatePanel').classList.add('hidden');
+        document.getElementById('unlockedStatePanel').classList.remove('hidden');
+        
+        // Show Matrix Answer keys
+        document.getElementById('matrixLockedBanner').classList.add('hidden');
+        document.getElementById('answerSheetMatrix').classList.remove('hidden');
+        
+        // Show individual question answers if toggle is checked
+        // Auto-check the toggle for convenience once unlocked
+        const toggle = document.getElementById('toggleShowAnswers');
+        toggle.checked = true;
+        toggleAllAnswers(true);
+        
+      } else {
+        errorMsg.classList.remove('hidden');
+        input.classList.add('border-rose-500', 'dark:border-rose-500');
+        
+        setTimeout(() => {
+          errorMsg.classList.add('hidden');
+          input.classList.remove('border-rose-500', 'dark:border-rose-500');
+        }, 3000);
+      }
+    }
+
+    function revealPasscodeHint() {
+      const modal = document.getElementById('hintModal');
+      modal.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeHint() {
+      document.getElementById('hintModal').classList.add('hidden');
+    }
+
+    // ==================== PDF MODAL & PRINT TRIGGERS ====================
+    function openPdfGuide() {
+      const modal = document.getElementById('pdfGuideModal');
+      const card = document.getElementById('pdfGuideCard');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      }, 10);
+    }
+
+    function closePdfGuide() {
+      const modal = document.getElementById('pdfGuideModal');
+      const card = document.getElementById('pdfGuideCard');
+      card.classList.remove('scale-100', 'opacity-100');
+      card.classList.add('scale-95', 'opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 300);
+    }
+
+    function triggerActualPrint() {
+      closePdfGuide();
+      setTimeout(() => {
+        window.print();
+      }, 350);
+    }
+
+    // ==================== INTERACTIVE QUIZ FUNCTIONS ====================
+    
+    function buildQuestionGrid() {
+      const grid = document.getElementById('questionGrid');
+      grid.innerHTML = '';
+      
+      questions.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `grid-btn-${idx}`;
+        btn.className = `w-10 h-10 rounded-lg text-sm font-bold flex items-center justify-center border transition-all duration-200 ${getGridButtonClass(idx)}`;
+        btn.innerText = q.id;
+        btn.onclick = () => selectQuestion(idx);
+        grid.appendChild(btn);
+      });
+    }
+
+    function getGridButtonClass(idx) {
+      const q = questions[idx];
+      const selected = quizAnswers[q.id];
+      
+      if (idx === currentQuestionIndex) {
+        return "border-blue-600 bg-blue-50 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 ring-2 ring-blue-400";
+      }
+      
+      if (selected) {
+        const isCorrect = selected === q.correct;
+        return isCorrect 
+          ? "border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/20 dark:text-emerald-400"
+          : "border-rose-500 bg-rose-50 text-rose-800 dark:bg-rose-950/20 dark:text-rose-400";
+      }
+      
+      return "border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300";
+    }
+
+    function loadActiveQuestion() {
+      const card = document.getElementById('questionCard');
+      const q = questions[currentQuestionIndex];
+      const selectedOption = quizAnswers[q.id];
+      const isAnswered = selectedOption !== undefined;
+      
+      let optionsHtml = '';
+      const optionPrefix = { 'A': 'ក', 'B': 'ខ', 'C': 'គ', 'D': 'ឃ' };
+
+      for (let key in q.options) {
+        let btnClass = "border-slate-200 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-500 bg-slate-50 dark:bg-slate-700/50 hover:bg-blue-50/30 dark:hover:bg-blue-950/20 text-slate-700 dark:text-slate-200";
+        let iconHtml = '';
+
+        if (isAnswered) {
+          if (key === q.correct) {
+            btnClass = "border-emerald-500 bg-emerald-50 text-emerald-800 dark:bg-emerald-950/30 dark:text-emerald-400 font-bold ring-2 ring-emerald-300";
+            iconHtml = '<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0"></i>';
+          } else if (key === selectedOption) {
+            btnClass = "border-rose-500 bg-rose-50 text-rose-800 dark:bg-rose-950/30 dark:text-rose-400 font-bold ring-2 ring-rose-300";
+            iconHtml = '<i data-lucide="x-circle" class="w-5 h-5 text-rose-600 dark:text-rose-400 shrink-0"></i>';
+          } else {
+            btnClass = "border-slate-200 dark:border-slate-700 opacity-60 text-slate-400 dark:text-slate-500";
+          }
+        }
+
+        optionsHtml += `
+          <button 
+            onclick="submitAnswer('${key}')" 
+            ${isAnswered ? 'disabled' : ''} 
+            class="w-full p-4 rounded-xl border text-left flex items-center justify-between gap-4 transition-all duration-200 ${btnClass}"
+          >
+            <span class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-full bg-white dark:bg-slate-800 border flex items-center justify-center shrink-0 shadow-sm font-bold">${optionPrefix[key]}</span>
+              <span class="text-sm md:text-base">${q.options[key]}</span>
+            </span>
+            ${iconHtml}
+          </button>
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="space-y-6">
+          <!-- Card Header & Navigation buttons -->
+          <div class="flex items-center justify-between">
+            <span class="bg-indigo-100 dark:bg-indigo-900/40 text-indigo-800 dark:text-indigo-300 font-bold text-xs px-3 py-1 rounded-full">
+              សំណួរលេខ ${q.id}
+            </span>
+            <div class="flex items-center space-x-1 text-xs text-slate-400">
+              <span>លិបិការ៖ ${currentQuestionIndex + 1} / 30</span>
+            </div>
+          </div>
+
+          <!-- Question Body -->
+          <div class="text-base md:text-lg font-bold text-slate-800 dark:text-slate-100 leading-relaxed">
+            ${q.question}
+          </div>
+
+          <!-- Options Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${optionsHtml}
+          </div>
+
+          <!-- Solution Explanation Box -->
+          ${isAnswered ? `
+            <div class="p-5 rounded-xl border border-blue-100 dark:border-blue-900 bg-blue-50/50 dark:bg-blue-950/20 text-sm leading-relaxed text-slate-700 dark:text-slate-300 animate-fadeIn">
+              <div class="flex items-center gap-2 mb-2 font-bold text-blue-800 dark:text-blue-400">
+                <i data-lucide="info" class="w-4 h-4"></i>
+                ការបកស្រាយលម្អិត៖
+              </div>
+              <div class="mt-1 font-serif">${q.explanation}</div>
+            </div>
+          ` : ''}
+        </div>
+
+        <!-- Card Footer Actions -->
+        <div class="flex items-center justify-between border-t border-slate-100 dark:border-slate-700 pt-6 mt-6">
+          <button 
+            onclick="prevQuestion()" 
+            class="px-4 py-2 border rounded-xl flex items-center gap-2 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-700 transition disabled:opacity-40"
+            ${currentQuestionIndex === 0 ? 'disabled' : ''}
+          >
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            ថយក្រោយ
+          </button>
+
+          <button 
+            onclick="nextQuestion()" 
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white rounded-xl flex items-center gap-2 text-sm font-semibold transition"
+          >
+            <span>${currentQuestionIndex === questions.length - 1 ? 'បង្ហាញលទ្ធផល' : 'សំណួរបន្ទាប់'}</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      `;
+
+      lucide.createIcons();
+      triggerMathJax();
+    }
+
+    function selectQuestion(idx) {
+      currentQuestionIndex = idx;
+      buildQuestionGrid();
+      loadActiveQuestion();
+    }
+
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        selectQuestion(currentQuestionIndex - 1);
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIndex < questions.length - 1) {
+        selectQuestion(currentQuestionIndex + 1);
+      } else {
+        showResultsSummary();
+      }
+    }
+
+    function submitAnswer(selectedKey) {
+      const q = questions[currentQuestionIndex];
+      if (quizAnswers[q.id] !== undefined) return; // Prevent double submission
+
+      quizAnswers[q.id] = selectedKey;
+      
+      // Update grid/score/progress
+      buildQuestionGrid();
+      updateQuizProgress();
+      loadActiveQuestion();
+    }
+
+    function updateQuizProgress() {
+      const answeredCount = Object.keys(quizAnswers).length;
+      const progressPercent = (answeredCount / questions.length) * 100;
+      
+      document.getElementById('quizProgressText').innerText = `${answeredCount} / ${questions.length}`;
+      document.getElementById('quizProgressBar').style.width = `${progressPercent}%`;
+
+      // Count scores
+      let correct = 0;
+      let incorrect = 0;
+      
+      questions.forEach(q => {
+        const answer = quizAnswers[q.id];
+        if (answer !== undefined) {
+          if (answer === q.correct) correct++;
+          else incorrect++;
+        }
+      });
+
+      document.getElementById('scoreCorrect').innerText = correct;
+      document.getElementById('scoreIncorrect').innerText = incorrect;
+    }
+
+    function resetQuiz() {
+      quizAnswers = {};
+      currentQuestionIndex = 0;
+      buildQuestionGrid();
+      updateQuizProgress();
+      loadActiveQuestion();
+    }
+
+    function showResultsSummary() {
+      const card = document.getElementById('questionCard');
+      let correct = 0;
+      let unanswered = [];
+      
+      questions.forEach((q, idx) => {
+        const answer = quizAnswers[q.id];
+        if (answer === q.correct) correct++;
+        if (answer === undefined) unanswered.push(idx + 1);
+      });
+
+      const scorePercent = Math.round((correct / questions.length) * 100);
+      
+      card.innerHTML = `
+        <div class="space-y-6 text-center py-6">
+          <div class="inline-flex p-4 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 mb-2">
+            <i data-lucide="trophy" class="w-16 h-16"></i>
+          </div>
+          
+          <div class="space-y-2">
+            <h3 class="text-2xl font-bold">តេស្តបញ្ចប់រួចរាល់!</h3>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">ពិន្ទុរបស់អ្នកទទួលបានគឺ៖</p>
+          </div>
+
+          <div class="inline-block py-3 px-6 rounded-2xl bg-slate-50 dark:bg-slate-700/50 border">
+            <span class="text-4xl font-extrabold text-blue-600 dark:text-blue-400">${correct} / ${questions.length}</span>
+            <span class="block text-xs text-slate-400 mt-1">ស្មើនឹង ${scorePercent}%</span>
+          </div>
+
+          ${unanswered.length > 0 ? `
+            <div class="p-4 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 rounded-xl max-w-md mx-auto text-sm text-left">
+              <span class="font-bold text-amber-800 dark:text-amber-400 flex items-center gap-1.5 mb-1">
+                <i data-lucide="alert-triangle" class="w-4 h-4"></i> សំណួរមិនទាន់បានឆ្លើយ៖
+              </span>
+              <p class="text-slate-600 dark:text-slate-400">សំណួរលេខ៖ ${unanswered.join(', ')}。</p>
+            </div>
+          ` : ''}
+
+          <div class="flex items-center justify-center gap-4 pt-4">
+            <button onclick="resetQuiz()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 active:scale-95 text-white font-semibold rounded-xl flex items-center gap-2 transition shadow-md shadow-blue-500/20">
+              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              សាកល្បងឡើងវិញ
+            </button>
+            <button onclick="switchMode('document')" class="px-6 py-2.5 border hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold rounded-xl flex items-center gap-2 transition">
+              <i data-lucide="book-open" class="w-4 h-4"></i>
+              អានចម្លើយទាំងអស់
+            </button>
+          </div>
+        </div>
+      `;
+
+      lucide.createIcons();
+    }
+
+
+    // ==================== DOCUMENT FULL LIST FUNCTIONS ====================
+    
+    function buildFullDocument() {
+      const listContainer = document.getElementById('fullQuestionsList');
+      listContainer.innerHTML = '';
+
+      const optionPrefix = { 'A': 'ក', 'B': 'ខ', 'C': 'គ', 'D': 'ឃ' };
+
+      questions.forEach((q, idx) => {
+        const qDiv = document.createElement('div');
+        qDiv.id = `doc-q-${q.id}`;
+        // doc-q-split prevents questions split across pages during print
+        qDiv.className = "py-6 space-y-4 doc-q-split";
+        
+        let optionsHtml = '';
+        for (let key in q.options) {
+          optionsHtml += `
+            <div class="flex items-start space-x-3 text-sm md:text-base">
+              <span class="w-6 h-6 border rounded-full font-bold bg-slate-50 dark:bg-slate-700 flex items-center justify-center text-xs shrink-0">${optionPrefix[key]}</span>
+              <span>${q.options[key]}</span>
+            </div>
+          `;
+        }
+
+        // The "Correct Answer: B" indicator starts with ID "doc-correct-header-${q.id}" and is hidden by default.
+        qDiv.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <h4 class="font-extrabold text-slate-800 dark:text-slate-200">សំណួរ ${q.id}៖</h4>
+              <span id="doc-correct-header-${q.id}" class="text-xs text-emerald-600 font-bold no-print hidden">ចម្លើយត្រឹមត្រូវ៖ <b>${optionPrefix[q.correct]}</b></span>
+            </div>
+            
+            <p class="text-slate-700 dark:text-slate-300 leading-relaxed font-semibold">${q.question}</p>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+              ${optionsHtml}
+            </div>
+
+            <!-- Detailed Answer Box -->
+            <div id="doc-ans-${q.id}" class="${showAllDocAnswers ? '' : 'hidden'} mt-4 p-4 rounded-xl border border-emerald-200 dark:border-emerald-900 bg-emerald-50/40 dark:bg-emerald-950/10 text-sm">
+              <span class="font-extrabold text-emerald-800 dark:text-emerald-400 flex items-center gap-1.5 mb-1.5">
+                <i data-lucide="check" class="w-4 h-4"></i>
+                ចម្លើយពិតគឺ៖ (${optionPrefix[q.correct]})
+              </span>
+              <div class="text-slate-600 dark:text-slate-300 font-serif leading-relaxed">${q.explanation}</div>
+            </div>
+          </div>
+        `;
+
+        listContainer.appendChild(qDiv);
+      });
+
+      lucide.createIcons();
+    }
+
+    function toggleAllAnswers(checked) {
+      showAllDocAnswers = checked;
+      questions.forEach(q => {
+        const div = document.getElementById(`doc-ans-${q.id}`);
+        const headerSpan = document.getElementById(`doc-correct-header-${q.id}`);
+        if (div) {
+          if (checked && isUnlocked) div.classList.remove('hidden');
+          else div.classList.add('hidden');
+        }
+        if (headerSpan) {
+          if (checked && isUnlocked) headerSpan.classList.remove('hidden');
+          else headerSpan.classList.add('hidden');
+        }
+      });
+      triggerMathJax();
+    }
+
+    function buildAnswerMatrix() {
+      const container = document.getElementById('answerSheetMatrix');
+      container.innerHTML = '';
+      
+      const optionPrefix = { 'A': 'ក', 'B': 'ខ', 'C': 'គ', 'D': 'ឃ' };
+      
+      questions.forEach(q => {
+        const item = document.createElement('div');
+        item.className = "p-3 rounded-lg border bg-slate-50 dark:bg-slate-700/30 flex flex-col items-center justify-center shadow-sm";
+        item.innerHTML = `
+          <span class="text-[10px] text-slate-400 font-bold block mb-1">សំណួរ ${q.id}</span>
+          <span class="w-7 h-7 rounded-full bg-blue-600 text-white font-extrabold text-xs flex items-center justify-center">${optionPrefix[q.correct]}</span>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+
+    // ==================== MS WORD (.doc) EXPORT FUNCTION ====================
+    
+    function downloadAsWord() {
+      const optionPrefix = { 'A': 'ក', 'B': 'ខ', 'C': 'គ', 'D': 'ឃ' };
+      
+      // Building optimized styled HTML wrapper for Word
+      let htmlString = `
+      <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+      <head>
+        <meta charset="utf-8">
+        <title>Mathematics QCM Collection</title>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Khmer&family=Battambang&display=swap');
+          body {
+            font-family: 'Khmer', 'Battambang', 'Segoe UI', Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #333333;
+          }
+          h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            color: #0d47a1;
+            text-align: center;
+            margin-bottom: 5px;
+          }
+          h2 {
+            font-size: 13pt;
+            text-align: center;
+            color: #555555;
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px double #333333;
+            padding-bottom: 15px;
+          }
+          .meta-info {
+            text-align: center;
+            font-size: 10pt;
+            color: #666666;
+            margin-bottom: 30px;
+          }
+          .q-block {
+            margin-bottom: 25px;
+            page-break-inside: avoid;
+          }
+          .q-title {
+            font-weight: bold;
+            font-size: 12pt;
+            margin-bottom: 8px;
+            color: #1a237e;
+          }
+          .q-text {
+            font-size: 11pt;
+            margin-bottom: 12px;
+            font-weight: bold;
+          }
+          .options-table {
+            width: 100%;
+            margin-bottom: 15px;
+            border-collapse: collapse;
+          }
+          .options-table td {
+            width: 50%;
+            padding: 4px 10px;
+            font-size: 11pt;
+          }
+          .explanation-box {
+            background-color: #f1f8e9;
+            border-left: 4px solid #4caf50;
+            padding: 10px 15px;
+            margin-top: 8px;
+            font-size: 10pt;
+            color: #2e7d32;
+          }
+          .key-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+          }
+          .key-matrix th, .key-matrix td {
+            border: 1px solid #cccccc;
+            padding: 8px;
+            text-align: center;
+            font-size: 10pt;
+          }
+          .key-matrix th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+          }
+        </style>
+      </head>
+      <body>
+        
+        <h1>កម្រងសំណួរ QCM គណិតវិទ្យា (លក្ខណៈឡាតិច)</h1>
+        <h2>Mathematics QCM Collection</h2>
+        
+        <div class="meta-info">
+          រៀបរៀងដោយ៖ <b>លោកគ្រូ តឿន សុកាន់យ៉ា</b><br>
+          កម្រិត៖ វិញ្ញាសាត្រៀមប្រឡង / លំហាត់ជ្រើសរើសពិសេស ចាប់ពីសំណួរ ១ ដល់ ៣០
+        </div>
+      `;
+
+      // Append questions
+      questions.forEach((q) => {
+        htmlString += `
+        <div class="q-block">
+          <div class="q-title">សំណួរ ${q.id}៖</div>
+          <div class="q-text">${q.question}</div>
+          
+          <table class="options-table">
+            <tr>
+              <td><b>ក.</b> ${q.options.A}</td>
+              <td><b>ខ.</b> ${q.options.B}</td>
+            </tr>
+            <tr>
+              <td><b>គ.</b> ${q.options.C}</td>
+              <td><b>ឃ.</b> ${q.options.D}</td>
+            </tr>
+          </table>
+          
+          <div class="explanation-box">
+            <b>ចម្លើយពិត៖ ${optionPrefix[q.correct]}</b><br>
+            <i>ការបកស្រាយលម្អិត៖</i> ${q.explanation}
+          </div>
+        </div>
+        `;
+      });
+
+      // Append Answer Matrix table
+      htmlString += `
+        <div style="page-break-before: always;"></div>
+        <h3 style="text-align: center; margin-top: 40px; color: #0d47a1;">តារាងចម្លើយផ្ទៀងផ្ទាត់ (Answer Matrix Table)</h3>
+        <table class="key-matrix">
+          <tr>
+            <th>លេខសំណួរ</th>
+      `;
+      
+      // Questions header
+      questions.forEach(q => {
+        htmlString += `<th>${q.id}</th>`;
+      });
+
+      htmlString += `
+          </tr>
+          <tr>
+            <td><b>ចម្លើយពិត</b></td>
+      `;
+
+      // Answer values
+      questions.forEach(q => {
+        htmlString += `<td style="font-weight: bold; color: #2e7d32;">${optionPrefix[q.correct]}</td>`;
+      });
+
+      htmlString += `
+          </tr>
+        </table>
+      </body>
+      </html>
+      `;
+
+      // Convert to Blob and download
+      const blob = new Blob(['\ufeff' + htmlString], {
+        type: 'application/msword;charset=utf-8'
+      });
+      
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'QCM_Mathematics_Teacher_Toeun_Sokanya.doc';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  </script>
+</body>
+</html>
